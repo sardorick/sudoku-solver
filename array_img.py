@@ -1,6 +1,10 @@
 from email import header
+from multiprocessing.pool import IMapIterator
 import numpy as np
 import pandas as pd
+import base64
+from PIL import Image
+import io
 
 # convert the array to a pictue of sudoku
 
@@ -29,14 +33,16 @@ def arr_img(grid):
         row = grid_str[i]
         # print 3x3 cells with border markers
         print('| ' + ' '.join(row[0:3]) + ' | ' + ' '.join(row[3:6]) +  ' | ' + ' '.join(row[6:]) + ' |')
-
+     
+        
     print(row_sep)
+    
 
-result = arr_img(example)
+arr_img(example)
 
-# df = pd.DataFrame(arr_img(example))
-# print(df)
-
-# type(result)
+# print(result)
+# print(type(result))
+# with open('img_put.txt', 'w') as f:
+#     f.write(arr_img(example))
 
 # print(example)
