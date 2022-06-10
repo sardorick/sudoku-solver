@@ -58,7 +58,8 @@ def crop_squares(contours, path):
         coord = [x, y, w, h]
         # square_coords.append(coord)
         cell = img[y:y+h, x:x+w]
-        cells.append(cell)
+        cv2.imwrite(f'./cropped_squares/img-{i}.png', cell)
+        # cells.append(cell)
 
         # cv2.rectangle(copy, (x,y), (x+w, y+h), (0,255,0), 2)
 
@@ -67,13 +68,13 @@ def crop_squares(contours, path):
 
     # cv2.rectangle(copy, (x,y), (x+w, y+h), (0,255,0), 2)
     # return l_r_contours
-    return square_coords
+    return cell
  
 
 # print(crop_squares(preprocess_image('sudoku_unsolved.png'), 'sudoku_unsolved.png'))
 cv2.imwrite('preprocessed_output.png', crop_squares(preprocess_image('sudoku_unsolved.png'), 'sudoku_unsolved.png'))
 
-
+# crop_squares(preprocess_image('sudoku_unsolved.png'), 'sudoku_unsolved.png')
 
 
 
