@@ -2,11 +2,8 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-def func(x):
-    return x[1]
-
 def preprocess_image(path):
-    kernel=cv2.getStructuringElement(cv2.MORPH_CROSS, (11,11))
+    kernel=cv2.getStructuringElement(cv2.MORPH_CROSS, (10,10))
     orig_img = cv2.imread(path)
     img = cv2.cvtColor(orig_img, cv2.COLOR_BGR2GRAY)
     img = cv2.GaussianBlur(img, (9,9), 0)
@@ -15,49 +12,29 @@ def preprocess_image(path):
     img = cv2.morphologyEx(img, cv2.MORPH_OPEN, (9,9))
 
     img = cv2.bitwise_not(img,img)
-    ext_contours, ext_hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    print(len(ext_contours))
     contours, hierarchy = cv2.findContours(img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    print(len(contours))
+    # print(len(contours))
     img = cv2.bitwise_not(img,img)
     # cv2.drawContours(orig_img, contours, -1, (0, 255,0) , 1)
     # cv2.drawContours(orig_img, ext_contours, -1, (0, 255,0), 2)
 
     sorted_contours = sorted(contours, key = cv2.contourArea, reverse=True)
+    cv2.drawContours(orig_img, sorted_contours[1:82], -1, (0, 255,0) , 1)
 
-    cv2.drawContours(orig_img, sorted_contours[1:81], -1, (0, 255,0) , 1)
-    # print(sorted)
-
-
-
+    # return orig_img
+    return sorted_contours[1:82]
 
 
-    # contours = sorted(contours, key=cv2.contourArea)# Sorting contours by area in ascending order
-    # box = contours[-1]
-
-    # bottom_right, _ = max(enumerate([pt[0][0] + pt[0][1] for pt in box]), key=func)
-    # top_left, _ = min(enumerate([pt[0][0] + pt[0][1] for pt in box]), key=func)
-    # bottom_left, _ = min(enumerate([pt[0][0] - pt[0][1] for pt in box]), key=func)
-    # top_right, _ = max(enumerate([pt[0][0] - pt[0][1] for pt in box]), key=func)
-
-    # #x, y coordinates of 4 corner points
-    # bottom_right = box[bottom_right][0]
-    # top_left = box[top_left][0]
-    # bottom_left = box[bottom_left][0]
-    # top_right = box[top_right][0]
-
-    # corners = (top_left, top_right, bottom_right, bottom_left)
-
-    # print(corners)
+def crop_squares(contours, path):
+    img = cv2.imread(path)
+    x,y,w,h = cv2.boundingRect(contours[2])
+    copy=img.copy()
+    cv2.rectangle(copy, (x,y), (x+w, y+h), (0,255,0), 2)
+    return copy
+ 
 
 
-
-
-    return orig_img
-
-
-
-cv2.imwrite('preprocessed_output.png', preprocess_image('sudoku_unsolved.png'))
+cv2.imwrite('preprocessed_output.png', crop_squares(preprocess_image('sudoku_unsolved.png'), 'sudoku_unsolved.png'))
 
 
 
