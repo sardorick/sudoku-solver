@@ -2,6 +2,11 @@ from os import pread
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from torchvision import transforms
+import torch
+import torch.nn.functional as F
+from PIL import Image
+
 
 def sort_contours(cnts, method="left-to-right"):
     # initialize the reverse flag and sort index
@@ -63,18 +68,12 @@ def crop_squares(contours, path):
 
         # cv2.rectangle(copy, (x,y), (x+w, y+h), (0,255,0), 2)
 
-
-
-
-    # cv2.rectangle(copy, (x,y), (x+w, y+h), (0,255,0), 2)
+    cv2.rectangle(copy, (x,y), (x+w, y+h), (0,255,0), 2)
     # return l_r_contours
-    return cell
+    return copy
  
 
 # print(crop_squares(preprocess_image('sudoku_unsolved.png'), 'sudoku_unsolved.png'))
 cv2.imwrite('preprocessed_output.png', crop_squares(preprocess_image('sudoku_unsolved.png'), 'sudoku_unsolved.png'))
 
 # crop_squares(preprocess_image('sudoku_unsolved.png'), 'sudoku_unsolved.png')
-
-
-
