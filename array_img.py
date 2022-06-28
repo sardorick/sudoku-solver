@@ -32,7 +32,7 @@ def arr_img(grid):
 
     print(row_sep)
 
-result = arr_img(example)
+# result = arr_img(example)
 
 # df = pd.DataFrame(arr_img(example))
 # print(df)

@@ -1,11 +1,5 @@
 from os import pread
 import cv2
-import numpy as np
-import matplotlib.pyplot as plt
-from torchvision import transforms
-import torch
-import torch.nn.functional as F
-from PIL import Image
 
 
 def sort_contours(cnts, method="left-to-right"):
@@ -63,7 +57,7 @@ def crop_squares(contours, path):
         coord = [x, y, w, h]
         # square_coords.append(coord)
         cell = img[y:y+h, x:x+w]
-        cv2.imwrite(f'./cropped_squares/img-{i}.png', cell)
+        cv2.imwrite(f'./cropped_squares_new/img-{i}.png', cell)
         # cells.append(cell)
 
         # cv2.rectangle(copy, (x,y), (x+w, y+h), (0,255,0), 2)

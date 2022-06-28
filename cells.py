@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 def split_boxes(board):
-"""split sudoku board into 81 cells."""
+    """split sudoku board into 81 cells."""
     rows = np.vsplit(board,9) # split image vertically
     boxes = []
     for r in rows:
